@@ -1,0 +1,226 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  displayName    String
+  passwordHash   String
+  avatarInitials String   @default("")
+  avatarUrl      String?
+  timezone       String   @default("UTC")
+  weekStartDay   String   @default("Mon")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  refreshTokens   RefreshToken[]
+  studySessions   StudySession[]
+  studyGoals      StudyGoal[]
+  studySnapshots  StudySnapshot[]
+  habitDefs       HabitDefinition[]
+  habitLogs       HabitLog[]
+  missionPillars  MissionPillar[]
+  dailyMissions   DailyMission[]
+  dailyCloses     DailyClose[]
+  growthSnapshots GrowthSnapshot[]
+  tasks           Task[]
+  taskAllocations WeeklyTaskAlloc[]
+  journalEntries  JournalEntry[]
+  gamification    Gamification?
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// ─── STUDY TRACKER ────────────────────────────────────────────────────────────
+
+model StudySession {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic      String
+  hours      Float
+  difficulty Int
+  note       String?
+  date       DateTime @default(now())
+  createdAt  DateTime @default(now())
+}
+
+model StudyGoal {
+  id          String @id @default(uuid())
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  month       Int
+  year        Int
+  targetHours Float
+
+  @@unique([userId, month, year])
+}
+
+model StudySnapshot {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  month         Int
+  year          Int
+  totalHours    Float
+  avgDifficulty Float
+  topTopics     Json
+  sessionsCount Int
+  createdAt     DateTime @default(now())
+
+  @@unique([userId, month, year])
+}
+
+// ─── PERSONAL GROWTH ──────────────────────────────────────────────────────────
+
+model HabitDefinition {
+  id         String     @id @default(uuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  category   String     @default("Custom")
+  isPositive Boolean    @default(true)
+  isActive   Boolean    @default(true)
+  order      Int        @default(0)
+  createdAt  DateTime   @default(now())
+  logs       HabitLog[]
+}
+
+model HabitLog {
+  id          String          @id @default(uuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitId     String
+  habit       HabitDefinition @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  date        DateTime
+  durationMin Int?
+  createdAt   DateTime        @default(now())
+
+  @@unique([userId, habitId, date])
+}
+
+model MissionPillar {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  timeSlot  String
+  order     Int     @default(0)
+  isDefault Boolean @default(false)
+  isActive  Boolean @default(true)
+}
+
+model DailyMission {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime
+  pillarId  String?
+  name      String
+  timeSlot  String
+  completed Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model DailyClose {
+  id       String   @id @default(uuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date     DateTime
+  dayScore Int
+  dayType  String
+  comment  String?
+  closedAt DateTime @default(now())
+
+  @@unique([userId, date])
+}
+
+model GrowthSnapshot {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  month          Int
+  year           Int
+  avgDayScore    Float
+  positiveHabits Json
+  negativeHabits Json
+  workDaysCount  Int
+  dayOffCount    Int
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, month, year])
+}
+
+// ─── TASKS ────────────────────────────────────────────────────────────────────
+
+model Task {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  priority    String    @default("Medium")
+  size        String    @default("Medium")
+  status      String    @default("Todo")
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  allocations WeeklyTaskAlloc[]
+}
+
+model WeeklyTaskAlloc {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([taskId, date])
+}
+
+// ─── JOURNAL ──────────────────────────────────────────────────────────────────
+
+model JournalEntry {
+  id         String    @id @default(uuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content    String
+  dayScore   Int?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  analysedAt DateTime?
+  analysis   Json?
+}
+
+// ─── GAMIFICATION ─────────────────────────────────────────────────────────────
+
+model Gamification {
+  id         String    @id @default(uuid())
+  userId     String    @unique
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  xp         Int       @default(0)
+  level      Int       @default(1)
+  streak     Int       @default(0)
+  lastActive DateTime?
+  badges     Json      @default("[]")
+  updatedAt  DateTime  @updatedAt
+}

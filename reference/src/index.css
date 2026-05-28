@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #E8622A;
+  --color-primary-dim: #C44D1A;
+  --color-primary-glow: rgba(232, 98, 42, 0.2);
+  --color-accent: #F0A500;
+  --color-bg: #12100E;
+  --color-bg-elevated: #1C1916;
+  --color-bg-card: #231F1B;
+  --color-bg-hover: #2C2620;
+  --color-border: #3A3028;
+  --color-text: #F0EAE0;
+  --color-text-muted: #9A8A78;
+  --color-text-dim: #5A4E42;
+  --color-success: #6DBF82;
+  --color-warning: #F0A500;
+  --color-danger: #E05C5C;
+  --color-info: #5AABCF;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --animate-drift: drift 20s infinite alternate linear;
+
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(5%, 5%) scale(1.1); }
+    100% { transform: translate(-5%, 2%) scale(1); }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-dim);
+  }
+}
+
+.glass {
+  background: rgba(35, 31, 27, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 234, 224, 0.08);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-bordered {
+  border: 1px solid rgba(240, 234, 224, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-bordered:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-glow);
+  transform: translateY(-2px);
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background-color: var(--color-bg-card);
+  transition: all 0.2s;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.2);
+  z-index: 10;
+  box-shadow: 0 0 10px var(--color-primary-glow);
+}
+

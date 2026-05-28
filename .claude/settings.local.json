@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"C:\\\\Users\\\\User\\\\Desktop\\\\Cloud Engineering\\\\Projects\\\\Full-Stack\\\\ascendly 3\\\\server\"; npx prisma generate 2>&1 | Where-Object { $_ -notmatch \"Update available|major update|pris.ly|npm i|└|┌|│\" } | Select-Object -Last 10)",
+      "PowerShell(cd \"C:\\\\Users\\\\User\\\\Desktop\\\\Cloud Engineering\\\\Projects\\\\Full-Stack\\\\ascendly 3\\\\server\"; npx prisma db push 2>&1 | Where-Object { $_ -notmatch \"Update available|major update|pris.ly|npm i|└|┌|│\" })",
+      "PowerShell(cd \"C:\\\\Users\\\\User\\\\Desktop\\\\Cloud Engineering\\\\Projects\\\\Full-Stack\\\\ascendly 3\\\\server\"; npx prisma db push --force-reset 2>&1 | Where-Object { $_ -notmatch \"Update available|major update|pris.ly|npm i|└|┌|│\" })",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:3001/api/auth/refresh\" -Method GET -ErrorAction SilentlyContinue 2>&1 | Out-String)",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/auth/refresh\" -Method POST -ErrorAction Stop; $r.StatusCode } catch { $_.Exception.Response.StatusCode.value__ })",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -Method GET -ErrorAction Stop; $r.StatusCode } catch { $_.Exception.Response.StatusCode.value__ })",
+      "PowerShell($body = '{\"email\":\"test@test.com\",\"password\":\"password123\"}'; try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/auth/login\" -Method POST -Body $body -ContentType \"application/json\" -ErrorAction Stop; $r.StatusCode; \\($r.Content | ConvertFrom-Json\\).user | Select-Object displayName, email, level, xp } catch { $_.Exception.Response.StatusCode.value__; $_.ErrorDetails.Message })",
+      "PowerShell($body = '{\"email\":\"test@test.com\",\"password\":\"password123\"}'; $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/auth/login\" -Method POST -Body $body -ContentType \"application/json\"; $data = $r.Content | ConvertFrom-Json; Write-Output \"Status: $\\($r.StatusCode\\)\"; Write-Output \"User: $\\($data.user.displayName\\) | Level: $\\($data.user.level\\) | XP: $\\($data.user.xp\\)\")",
+      "PowerShell(cd \"C:\\\\Users\\\\User\\\\Desktop\\\\Cloud Engineering\\\\Projects\\\\Full-Stack\\\\ascendly 3\\\\server\"; npx prisma generate 2>&1 | Where-Object { $_ -match \"Generated|Error\" })",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Start-Sleep -Seconds 6; try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -Method GET -ErrorAction Stop; \"Server: $\\($r.StatusCode\\)\" } catch { \"Server: DOWN - $\\($_.Exception.Message\\)\" }; try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -Method GET -ErrorAction Stop; \"Client: $\\($r.StatusCode\\)\" } catch { \"Client: DOWN\" })",
+      "PowerShell(Start-Sleep -Seconds 6; try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -ErrorAction Stop; \"Server OK: $\\($r.StatusCode\\)\" } catch { \"Server DOWN\" }; try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -ErrorAction Stop; \"Client OK: $\\($r.StatusCode\\)\" } catch { \"Client DOWN\" })",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -ErrorAction Stop; \"Server OK: $\\($r.StatusCode\\)\" } catch { \"Server DOWN: $\\($_.Exception.Message\\)\" })"
+    ]
+  }
+}

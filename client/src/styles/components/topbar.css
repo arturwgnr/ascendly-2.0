@@ -1,0 +1,129 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  height: var(--topbar-height);
+  background: rgba(18, 16, 14, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 30;
+}
+
+[data-theme="light"] .topbar {
+  background: rgba(245, 240, 232, 0.85);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar-menu-btn {
+  display: none;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.topbar-menu-btn:hover {
+  color: var(--text);
+}
+
+.topbar-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-action-btn {
+  padding: 7px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.topbar-action-btn:hover {
+  color: var(--text);
+  background: var(--bg-hover);
+}
+
+.topbar-action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color 0.18s ease, background-color 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  background: var(--bg-hover);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s var(--ease-out), opacity 0.3s ease;
+  position: absolute;
+}
+
+.theme-toggle-icon.entering {
+  transform: rotate(-90deg) scale(0.5);
+  opacity: 0;
+}
+
+.theme-toggle-icon.active {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    left: 0;
+  }
+  .topbar-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

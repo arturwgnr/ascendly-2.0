@@ -1,0 +1,239 @@
+.study-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.study-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.study-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.study-header p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.study-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .study-stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.study-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  transition: border-color 0.18s ease;
+}
+
+.study-stat-card:hover {
+  border-color: rgba(232, 98, 42, 0.2);
+}
+
+.study-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.study-stat-value-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.study-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.study-stat-delta {
+  font-size: 11px;
+  font-weight: 700;
+  padding-bottom: 3px;
+}
+
+.study-stat-delta.positive { color: var(--success); }
+.study-stat-delta.neutral  { color: var(--primary); }
+
+/* Sessions table */
+.study-sessions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.study-sessions-table thead {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.study-sessions-table thead th {
+  padding: 10px 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.study-sessions-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.12s ease;
+}
+
+.study-sessions-table tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+.study-sessions-table td {
+  padding: 11px 16px;
+  color: var(--text);
+}
+
+.study-sessions-table td.muted {
+  color: var(--text-muted);
+}
+
+.study-sessions-table td.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.difficulty-dots {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+}
+
+.difficulty-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.difficulty-dot.filled { background: var(--primary); }
+.difficulty-dot.empty  { background: var(--border); }
+
+/* Monthly bar chart */
+.study-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 120px;
+  padding: 16px 8px 0;
+}
+
+.study-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.study-bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: rgba(232, 98, 42, 0.2);
+  transition:
+    background-color 0.18s ease,
+    height 0.5s var(--ease-out);
+  cursor: pointer;
+}
+
+.study-bar:hover {
+  background: var(--primary);
+}
+
+.study-bar-label {
+  font-size: 9px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Goal panel */
+.study-goal-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.study-goal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.study-goal-input-row input {
+  width: 80px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 7px 12px;
+  font-size: 14px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  text-align: center;
+  transition: border-color 0.15s ease;
+}
+
+.study-goal-input-row input:focus {
+  outline: none;
+  border-color: rgba(232, 98, 42, 0.5);
+}
+
+.study-goal-progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.study-goal-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.6s var(--ease-out);
+}
+
+.study-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .study-content-grid {
+    grid-template-columns: 3fr 2fr;
+  }
+}
