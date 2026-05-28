@@ -13,7 +13,9 @@
       "PowerShell(Get-Process *)",
       "PowerShell(Start-Sleep -Seconds 6; try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -Method GET -ErrorAction Stop; \"Server: $\\($r.StatusCode\\)\" } catch { \"Server: DOWN - $\\($_.Exception.Message\\)\" }; try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -Method GET -ErrorAction Stop; \"Client: $\\($r.StatusCode\\)\" } catch { \"Client: DOWN\" })",
       "PowerShell(Start-Sleep -Seconds 6; try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -ErrorAction Stop; \"Server OK: $\\($r.StatusCode\\)\" } catch { \"Server DOWN\" }; try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -ErrorAction Stop; \"Client OK: $\\($r.StatusCode\\)\" } catch { \"Client DOWN\" })",
-      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -ErrorAction Stop; \"Server OK: $\\($r.StatusCode\\)\" } catch { \"Server DOWN: $\\($_.Exception.Message\\)\" })"
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3001/api/health\" -ErrorAction Stop; \"Server OK: $\\($r.StatusCode\\)\" } catch { \"Server DOWN: $\\($_.Exception.Message\\)\" })",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
